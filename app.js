@@ -29,18 +29,48 @@ new Product('usb', 'images/usb.gif');
 new Product('water-can', 'images/water-can.jpg');
 new Product('wine-glass', 'images/wine-glass.jpg');
 
-//event listener
 var imgEl = [];
+var randomIndex = [];
+var previousImages =[];
+
+
+//for loop to locate image location in HTML and creating event listener for each image
 for (var i =0; i < 3; i++) {
-  imgEl[i] = document.getElementById('image-'+(i+1));
-  imgEl[i].addEventListener('click',randomProduct);
+  imgEl[i] = document.getElementById('image-'+ (i + 1));
+  imgEl[i].addEventListener('click', randomProduct);
 }
 
-var randomIndex = [];
+//function to create random product images that appear on HTML
 function randomProduct () {
-  for (var i = 0; i < 3; i++) {
-    randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
-    imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
+  // do while loop to ensure that none of the images are the same
+  do {
+    for (var j = 0; j < 3; j++) {
+      randomIndex[j] = Math.floor(Math.random() * Product.allProducts.length);
+      imgEl[j].src = Product.allProducts[randomIndex[j]].filepath;
+    }
+  } while (((randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2])) || (randomIndex[0] === previousImages[0] || randomIndex[0] === previousImages[1] || randomIndex[0] === previousImages[2] || randomIndex[1] === previousImages[0] || randomIndex[1] === previousImages[1] === randomIndex[1] === previousImages[2] || randomIndex[2] === previousImages[0] || randomIndex[2] === previousImages[1] || randomIndex[2] === previousImages[2]));
+
+  //do while loop to ensure that none of the images match previous images
+  // for (var k = 0; k < 3; k++) {
+  //   if (randomIndex[k] === previousImages[0] || randomIndex[k] === previousImages[1] || randomIndex[k] === previousImages[2]) {
+  //     console.log('previous picture detected! changing picture');
+  //     randomIndex[k] = Math.floor(Math.random() * Product.allProducts.length);
+  //     imgEl[k].src = Product.allProducts[randomIndex[k]].filepath;
+  //   }
+  //   //checking again to ensure that the new image created from the above code is not the same
+  //   do {
+  //     for (var m = 0; m < 3; m++) {
+  //       randomIndex[m] = Math.floor(Math.random() * Product.allProducts.length);
+  //       imgEl[m].src = Product.allProducts[randomIndex[m]].filepath;
+  //     }
+  //   } while ((randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]));
+  // }
+
+  //pushing data into previousImages array so that we can check if data is the same from preivous event
+  for (var l = 0; l < randomIndex.length; l++) {
+    previousImages[l] = randomIndex[l];
   }
+  console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
 }
+
 randomProduct();
