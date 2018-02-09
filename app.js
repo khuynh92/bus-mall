@@ -6,6 +6,7 @@ Product.allProducts = [];
 function Product(name, filepath) {
   this.name = name;
   this.filepath = filepath;
+  Product.allProducts.push(this);
 }
 
 //creating 
@@ -26,6 +27,20 @@ new Product('tauntaun','images/tauntaun.jpg');
 new Product('unicorn','images/unicorn.jpg');
 new Product('usb', 'images/usb.gif');
 new Product('water-can', 'images/water-can.jpg');
-new Product('wine-glass', 'images/wine-glass');
+new Product('wine-glass', 'images/wine-glass.jpg');
 
 //event listener
+var imgEl = [];
+for (var i =0; i < 3; i++) {
+  imgEl[i] = document.getElementById('image-'+(i+1));
+  imgEl[i].addEventListener('click',randomProduct);
+}
+
+var randomIndex = [];
+function randomProduct () {
+  for (var i = 0; i < 3; i++) {
+    randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
+    imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
+  }
+}
+randomProduct();
