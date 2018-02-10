@@ -35,18 +35,22 @@ nav ul li {
   margin: auto;
 }
 
-#main-images, #main-images-test{
+#main-images{
   width: 960px;
   margin: auto;
   margin-bottom: 30px;
 }
 
-#main-images img, #main-images-test img {
+#main-images img {
   width: 300px;
   height: 300px;
-  display: inline-block;
+  float: left;
+  margin-right: 30px;
 }
 
+#main-images :last-child {
+  margin-right: 0px;
+}
 footer {
   margin-top: 500px;
   width: 100%;
