@@ -31,6 +31,7 @@ new Product('usb', 'images/usb.gif');
 new Product('water-can', 'images/water-can.jpg');
 new Product('wine-glass', 'images/wine-glass.jpg');
 
+var clickedImage = 'none';
 var imgEl = [];
 var randomIndex = [.1,.2,.3]; //placeholder numbers so that correct line of code in conditional will run
 var previousImages = [.4,.5,.6]; //placeholder numbers so that correct line of code in conditional will run
@@ -44,10 +45,9 @@ for (var i =0; i < 3; i++) {
 
 //function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 
-
 function randomProduct () {
 
-//creating img based on name of product instance
+  //creating img based on name of product instance
   for (var i = 0; i < 3; i++) {
     do {
       randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
@@ -66,20 +66,26 @@ function randomProduct () {
   }
   console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
 
-  //adding number of clicks when a particular image is clicked
-
-  //counting number of clicks
-  for (var k = 0; k < 3; k++) {
-    imgEl[k].onclick = function() {
-      totalClicks++;
-      console.log('Total Clicks is: ' + totalClicks);
-    };
-  }
-
-  //stopping code when total clicks is 25
-  if (totalClicks === 25) {
-    alert('you did it!');
-  }
+  //storing which image was clicked in clickedImage
+  imgEl[0].onclick = function () {
+    clickedImage = Product.allProducts[randomIndex[0]].name;
+    totalClicks++;
+    console.log(Product.allProducts[randomIndex[0]].name + ' was clicked');
+    console.log('Total clicks is: ' + totalClicks);
+    return clickedImage;
+  };
+  imgEl[1].onclick = function () {
+    clickedImage = Product.allProducts[randomIndex[1]].name;
+    totalClicks++;
+    console.log(Product.allProducts[randomIndex[1]].name + ' was clicked');
+    console.log('Total clicks is: ' + totalClicks);
+  };
+  imgEl[2].onclick = function () {
+    clickedImage = Product.allProducts[randomIndex[2]].name;
+    totalClicks++;
+    console.log(Product.allProducts[randomIndex[2]].name + ' was clicked');
+    console.log('Total clicks is: ' + totalClicks);
+  };
 }
 
 randomProduct();
