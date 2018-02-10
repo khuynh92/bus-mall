@@ -43,27 +43,40 @@ for (var i = 0; i < 3; i++) {
 //function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 function randomProduct() {
   //creating img based on name of product instance
-  for (var i = 0; i < 3; i++) {
-    do {
-      randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
-      imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
-    } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
-  }
-  //display number of times image is shown
-  for (var m = 0; m < 3; m++) {
-    allProducts[randomIndex[m]].numTimesShown++;
-  }
-  //changing id from generic to specific id
-  for (var l = 0; l < 3; l++) {
-    imgEl[l].setAttribute('id', Product.allProducts[randomIndex[l]].name);
-  }
+  if (totalClicks < 25) {
+    for (var i = 0; i < 3; i++) {
+      do {
+        randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
+        imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
+      } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
+    }
+    //display number of times image is shown
+    for (var m = 0; m < 3; m++) {
+      allProducts[randomIndex[m]].numTimesShown++;
+    }
+    //changing id from generic to specific id
+    for (var l = 0; l < 3; l++) {
+      imgEl[l].setAttribute('id', Product.allProducts[randomIndex[l]].name);
+    }
 
-  console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
-  //creating an array for previous images
-  for (var j = 0; j < randomIndex.length; j++) {
-    previousImages[j] = randomIndex[j];
+    console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
+    //creating an array for previous images
+    for (var j = 0; j < randomIndex.length; j++) {
+      previousImages[j] = randomIndex[j];
+    }
+    tallyCounter();
   }
-  tallyCounter();
+  if (totalClicks === 25) {
+    console.log('creating data!');
+    var dataEl = document.getElementById('data');
+    var ulEl = document.createElement('ul');
+    dataEl.appendChild(ulEl);
+    for (var k = 0; k < allProducts.length; k++) {
+      var liEl = document.createElement('li');
+      liEl.textContent = allProducts[k].name + ' was chosen ' + allProducts[k].numOfClicks + ' times, and appeared ' + allProducts[k].numTimesShown + '.';
+      ulEl.appendChild(liEl);
+    }
+  }
 }
 
 function tallyCounter() {
@@ -93,7 +106,6 @@ function tallyCounter() {
     console.log('Total clicks is: ' + totalClicks);
     randomProduct();
   };
-
 }
 
 randomProduct();
