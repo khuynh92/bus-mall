@@ -2,14 +2,15 @@
 
 //creating an array to store all image objects
 Product.allProducts = [];
-
+var totalClicks = 0;
 function Product(name, filepath) {
   this.name = name;
   this.filepath = filepath;
   Product.allProducts.push(this);
-}
+  this.numOfClicks = 0;
+  this.numTimesShown = 0;
 
-//creating 
+}
 
 new Product('bag', 'images/bag.jpg');
 new Product('banana', 'images/banana.jpg');
@@ -31,7 +32,7 @@ new Product('wine-glass', 'images/wine-glass.jpg');
 
 var imgEl = [];
 var randomIndex = [.1,.2,.3]; //placeholder numbers so that correct line of code in conditional will run
-var previousImages =[.4,.5,.6]; //placeholder numbers so that correct line of code in conditional will run
+var previousImages = [.4,.5,.6]; //placeholder numbers so that correct line of code in conditional will run
 
 
 //for loop to locate image location in HTML and creating event listener for each image
@@ -40,32 +41,39 @@ for (var i =0; i < 3; i++) {
   imgEl[i].addEventListener('click', randomProduct);
 }
 
-//function to create random product images that appear on HTML
-function randomProduct () {
-  // do while loop to ensure that none of the images are the same
-  do {
-    for (var j = 0; j < 3; j++) {
-      randomIndex[j] = Math.floor(Math.random() * Product.allProducts.length);
-      imgEl[j].src = Product.allProducts[randomIndex[j]].filepath;
-    }
-  } while (randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
+//function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 
-  //to ensure that no images are from the previous image
-  for (var k = 0; k < 3; k++) {
-    if (randomIndex[k] === previousImages[0] || randomIndex[k] === previousImages[1] || randomIndex[k] === previousImages[2]) {
-      console.log('previous image detected!');
-      for (var l = 0; l < 3; l++) {
-        do {
-          randomIndex[l] = Math.floor(Math.random() * Product.allProducts.length);
-          imgEl[l].src = Product.allProducts[randomIndex[l]].filepath;
-        } while ((randomIndex[l] === previousImages[0] || randomIndex[l] === previousImages[1] || randomIndex[l] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
-      }
-    }
+
+function randomProduct () {
+
+  for (var i = 0; i < 3; i++) {
+    do {
+      randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
+      imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
+    } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
   }
-  //creating an previous image array to compare with randomIndex
-  for (var n = 0; n < randomIndex.length; n++) {
-    previousImages[n] = randomIndex[n];
+
+  //creating an array for previous images
+  for (var j = 0; j < randomIndex.length; j++) {
+    previousImages[j] = randomIndex[j];
   }
   console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
+
+  //adding number of clicks to object instance
+  randomIndex[0].numOfClicks++;
+  console.log('adding to number of clicks' + randomIndex[0].numOfClicks);
+  //counting number of clicks
+  for (var k = 0; k < 3; k++) {
+    imgEl[k].onclick = function() {
+      totalClicks++;
+      console.log('Total Clicks is: ' + totalClicks);
+    };
+  }
+
+  //stopping code when total clicks is 25
+  if (totalClicks === 25) {
+    alert('you did it!');
+  }
 }
+
 randomProduct();
