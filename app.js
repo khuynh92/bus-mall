@@ -60,8 +60,7 @@ function randomProduct () {
   console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
 
   //adding number of clicks to object instance
-  randomIndex[0].numOfClicks++;
-  console.log('adding to number of clicks' + randomIndex[0].numOfClicks);
+
   //counting number of clicks
   for (var k = 0; k < 3; k++) {
     imgEl[k].onclick = function() {
