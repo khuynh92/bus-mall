@@ -3,6 +3,7 @@
 //creating an array to store all image objects
 Product.allProducts = [];
 var totalClicks = 0;
+
 function Product(name, filepath) {
   this.name = name;
   this.filepath = filepath;
@@ -46,11 +47,17 @@ for (var i =0; i < 3; i++) {
 
 function randomProduct () {
 
+//creating img based on name of product instance
   for (var i = 0; i < 3; i++) {
     do {
       randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
       imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
     } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
+  }
+
+  //changing id from generic to specific id
+  for (var l = 0; l < 3; l++) {
+    imgEl[l].setAttribute('id', Product.allProducts[randomIndex[l]].name);
   }
 
   //creating an array for previous images
@@ -59,7 +66,7 @@ function randomProduct () {
   }
   console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
 
-  //adding number of clicks to object instance
+  //adding number of clicks when a particular image is clicked
 
   //counting number of clicks
   for (var k = 0; k < 3; k++) {
