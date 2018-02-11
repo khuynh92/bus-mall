@@ -77,34 +77,33 @@ function randomProduct() {
     dataEl.appendChild(ulEl);
     for (var k = 0; k < allProducts.length; k++) {
       var liEl = document.createElement('li');
-      liEl.textContent = allProducts[k].name + ' was chosen ' + allProducts[k].numOfClicks + ' times, and appeared ' + allProducts[k].numTimesShown + '.';
+      liEl.textContent = allProducts[k].name + ' was chosen ' + allProducts[k].numOfClicks + ' times, and appeared ' + allProducts[k].numTimesShown + ' times.';
       ulEl.appendChild(liEl);
     }
   }
 }
 function tallyCounter() {
-  var clickedImage = 0;
   if (totalClicks === -1) {
     randomProduct();
-  } 
+  }
   if (totalClicks >= 0) {
     //storing which image was clicked in clickedImage
     imgEl[0].onclick = function () {
-      clickedImage = allProducts[previousImages[0]];
+      var clickedImage = allProducts[previousImages[0]];
       clickedImage.numOfClicks++;
       console.log(allProducts[previousImages[0]].name + ' was clicked');
       randomProduct();
       console.log('Total clicks is: ' + totalClicks);
     };
     imgEl[1].onclick = function () {
-      clickedImage = allProducts[previousImages[1]];
+      var clickedImage = allProducts[previousImages[1]];
       clickedImage.numOfClicks++;
       console.log(allProducts[previousImages[1]].name + ' was clicked');
       randomProduct();
       console.log('Total clicks is: ' + totalClicks);
     };
     imgEl[2].onclick = function () {
-      clickedImage = allProducts[previousImages[2]];
+      var clickedImage = allProducts[previousImages[2]];
       clickedImage.numOfClicks++;
       console.log(allProducts[previousImages[2]].name + ' was clicked');
       randomProduct();

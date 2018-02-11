@@ -46,7 +46,31 @@ nav ul li {
   width: 300px;
   height: 300px;
   float: left;
-  margin-right: 30px;
+  margin-right: 27px;
+  opacity: .65;
+}
+
+#main-images img:hover {
+    opacity: 1.0;
+}
+
+#data {
+  width: 960px;
+  margin: auto;
+}
+
+#data ul {
+  width: 480px;
+  margin: auto;
+  border: 2px solid;
+}
+
+#data ul li {
+  padding-bottom: 4px;
+  padding-left: 60px;
+  margin: auto;
+  text-align: left;
+  list-style-type: none;
 }
 
 #main-images :last-child {
