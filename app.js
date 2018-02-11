@@ -2,7 +2,7 @@
 
 //creating an array to store all image objects
 var allProducts = Product.allProducts = [];
-var totalClicks = 0;
+var totalClicks = -1;
 
 function Product(name, filepath) {
   this.name = name;
@@ -42,31 +42,35 @@ for (var i = 0; i < 3; i++) {
 
 //function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 function randomProduct() {
+  totalClicks++;
   //creating img based on name of product instance
-  if (totalClicks < 25) {
-    for (var i = 0; i < 3; i++) {
-      do {
-        randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
-        imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
-      } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
-    }
-    //display number of times image is shown
-    for (var m = 0; m < 3; m++) {
-      allProducts[randomIndex[m]].numTimesShown++;
-    }
-    //changing id from generic to specific id
-    for (var l = 0; l < 3; l++) {
-      imgEl[l].setAttribute('id', Product.allProducts[randomIndex[l]].name);
-    }
+  for (var i = 0; i < 3; i++) {
+    do {
+      randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
+      imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
+    } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
+  }
+  //display number of times image is shown
+  for (var m = 0; m < 3; m++) {
+    allProducts[randomIndex[m]].numTimesShown++;
+  }
+  //changing id from generic to specific id
+  for (var l = 0; l < 3; l++) {
+    imgEl[l].setAttribute('id', Product.allProducts[randomIndex[l]].name);
+  }
 
-    console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
-    //creating an array for previous images
-    for (var j = 0; j < randomIndex.length; j++) {
-      previousImages[j] = randomIndex[j];
-    }
-    tallyCounter();
+  console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
+  //creating an array for previous images
+  for (var j = 0; j < randomIndex.length; j++) {
+    previousImages[j] = randomIndex[j];
   }
   if (totalClicks === 25) {
+    for (var p = 0; p < 3; p++) {
+      imgEl[p].removeEventListener('click', tallyCounter);
+      imgEl[p].onclick = function() {
+        return false;
+      };
+    }
     console.log('creating data!');
     var dataEl = document.getElementById('data');
     var ulEl = document.createElement('ul');
@@ -78,34 +82,34 @@ function randomProduct() {
     }
   }
 }
-
 function tallyCounter() {
   var clickedImage = 0;
-  //storing which image was clicked in clickedImage
-  imgEl[0].onclick = function () {
-    clickedImage = allProducts[previousImages[0]];
-    clickedImage.numOfClicks++;
-    totalClicks++;
-    console.log(allProducts[previousImages[0]].name + ' was clicked');
-    console.log('Total clicks is: ' + totalClicks);
+  if (totalClicks === -1) {
     randomProduct();
-  };
-  imgEl[1].onclick = function () {
-    clickedImage = allProducts[previousImages[1]];
-    clickedImage.numOfClicks++;
-    totalClicks++;
-    console.log(allProducts[previousImages[1]].name + ' was clicked');
-    console.log('Total clicks is: ' + totalClicks);
-    randomProduct();
-  };
-  imgEl[2].onclick = function () {
-    clickedImage = allProducts[previousImages[2]];
-    clickedImage.numOfClicks++;
-    totalClicks++;
-    console.log(allProducts[previousImages[2]].name + ' was clicked');
-    console.log('Total clicks is: ' + totalClicks);
-    randomProduct();
-  };
+  } 
+  if (totalClicks >= 0) {
+    //storing which image was clicked in clickedImage
+    imgEl[0].onclick = function () {
+      clickedImage = allProducts[previousImages[0]];
+      clickedImage.numOfClicks++;
+      console.log(allProducts[previousImages[0]].name + ' was clicked');
+      randomProduct();
+      console.log('Total clicks is: ' + totalClicks);
+    };
+    imgEl[1].onclick = function () {
+      clickedImage = allProducts[previousImages[1]];
+      clickedImage.numOfClicks++;
+      console.log(allProducts[previousImages[1]].name + ' was clicked');
+      randomProduct();
+      console.log('Total clicks is: ' + totalClicks);
+    };
+    imgEl[2].onclick = function () {
+      clickedImage = allProducts[previousImages[2]];
+      clickedImage.numOfClicks++;
+      console.log(allProducts[previousImages[2]].name + ' was clicked');
+      randomProduct();
+      console.log('Total clicks is: ' + totalClicks);
+    };
+  }
 }
-
-randomProduct();
+tallyCounter();

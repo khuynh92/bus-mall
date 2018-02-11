@@ -39,7 +39,7 @@ nav ul li {
   width: 960px;
   margin: auto;
   margin-bottom: 30px;
-  overflow: auto;
+  overflow: auto; 
 }
 
 #main-images img {
