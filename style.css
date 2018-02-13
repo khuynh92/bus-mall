@@ -49,6 +49,7 @@ nav ul li {
   margin-right: 27px;
   opacity: .65;
   cursor: pointer;
+  transition: 300ms;
 }
 
 #main-images img:hover {
@@ -83,3 +84,4 @@ footer {
   height: 100px;
   background-color: lightgray;
 }
+

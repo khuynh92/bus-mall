@@ -4,6 +4,8 @@
 Product.names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 var allProducts = Product.allProducts = [];
 var totalClicks = -1;
+var allNumOfClicks = [];
+var allNumTimesShown = [];
 
 function Product(name, filepath) {
   this.name = name;
@@ -17,7 +19,7 @@ function Product(name, filepath) {
 for (var p = 0; p < Product.names.length; p++) {
   if (Product.names[p] === 'usb') {
     new Product(Product.names[p], 'images/' + Product.names[p] + '.gif');
-  } else  { 
+  } else {
     new Product(Product.names[p], 'images/' + Product.names[p] + '.jpg');
   }
 }
@@ -38,19 +40,66 @@ function randomProduct() {
   if (totalClicks === 25) {
     for (var p = 0; p < 3; p++) {
       imgEl[p].removeEventListener('click', tallyCounter);
-      imgEl[p].onclick = function() {
+      imgEl[p].onclick = function () {
         return false;
       };
     }
     console.log('creating data!');
-    var dataEl = document.getElementById('data');
-    var ulEl = document.createElement('ul');
-    dataEl.appendChild(ulEl);
-    for (var k = 0; k < allProducts.length; k++) {
-      var liEl = document.createElement('li');
-      liEl.textContent = allProducts[k].name + ' was chosen ' + allProducts[k].numOfClicks + ' times, and appeared ' + allProducts[k].numTimesShown + ' times.';
-      ulEl.appendChild(liEl);
+    var ctx1 = document.getElementById('chart1');
+    var ctx2 = document.getElementById('chart2');
+
+    for (var s = 0; s < allProducts.length; s++) {
+      allNumOfClicks.push(allProducts[s].numOfClicks);
+      allNumTimesShown.push(allProducts[s].numTimesShown);
     }
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: Product.names,
+        datasets: [{
+          label: '# of Votes',
+          data: allNumOfClicks,
+          backgroundColor: 'lightblue'
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Number of Times Product is Chosen'
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: Product.names,
+        datasets: [{
+          label: '# of times',
+          data: allNumTimesShown,
+          backgroundColor: 'lightgreen'
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Number of Times Product Appears'
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
   }
   //creating img based on name of product instance
   for (var i = 0; i < 3; i++) {
@@ -64,8 +113,8 @@ function randomProduct() {
     allProducts[randomIndex[m]].numTimesShown++;
   }
   //changing id from generic to specific id
-  for (var l = 0; l < 3; l++) {
-    imgEl[l].setAttribute('id', Product.allProducts[randomIndex[l]].name);
+  for (var s = 0; s < 3; s++) {
+    imgEl[s].setAttribute('id', Product.allProducts[randomIndex[s]].name);
   }
 
   console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
@@ -74,6 +123,7 @@ function randomProduct() {
     previousImages[j] = randomIndex[j];
   }
 }
+
 function tallyCounter() {
   if (totalClicks === -1) {
     randomProduct();
