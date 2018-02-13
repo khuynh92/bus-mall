@@ -1,6 +1,7 @@
 'use strict';
 
 //creating an array to store all image objects
+Product.names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 var allProducts = Product.allProducts = [];
 var totalClicks = -1;
 
@@ -12,23 +13,14 @@ function Product(name, filepath) {
   this.numTimesShown = 0;
 }
 
-new Product('bag', 'images/bag.jpg');
-new Product('banana', 'images/banana.jpg');
-new Product('bathroom', 'images/bathroom.jpg');
-new Product('boots', 'images/boots.jpg');
-new Product('breakfast', 'images/breakfast.jpg');
-new Product('bubblegum', 'images/bubblegum.jpg');
-new Product('chair', 'images/chair.jpg');
-new Product('cthulhu', 'images/cthulhu.jpg');
-new Product('dog-duck', 'images/dog-duck.jpg');
-new Product('dragon', 'images/dragon.jpg');
-new Product('pen', 'images/pen.jpg');
-new Product('pet-sweep', 'images/pet-sweep.jpg');
-new Product('tauntaun', 'images/tauntaun.jpg');
-new Product('unicorn', 'images/unicorn.jpg');
-new Product('usb', 'images/usb.gif');
-new Product('water-can', 'images/water-can.jpg');
-new Product('wine-glass', 'images/wine-glass.jpg');
+// instantiating new Products with a for loop
+for (var p = 0; p < Product.names.length; p++) {
+  if (Product.names[p] === 'usb') {
+    new Product(Product.names[p], 'images/' + Product.names[p] + '.gif');
+  } else  { 
+    new Product(Product.names[p], 'images/' + Product.names[p] + '.jpg');
+  }
+}
 
 var imgEl = [];
 var randomIndex = [.1, .2, .3]; //placeholder numbers so that correct line of code in conditional will run the first time
@@ -43,6 +35,23 @@ for (var i = 0; i < 3; i++) {
 //function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 function randomProduct() {
   totalClicks++;
+  if (totalClicks === 25) {
+    for (var p = 0; p < 3; p++) {
+      imgEl[p].removeEventListener('click', tallyCounter);
+      imgEl[p].onclick = function() {
+        return false;
+      };
+    }
+    console.log('creating data!');
+    var dataEl = document.getElementById('data');
+    var ulEl = document.createElement('ul');
+    dataEl.appendChild(ulEl);
+    for (var k = 0; k < allProducts.length; k++) {
+      var liEl = document.createElement('li');
+      liEl.textContent = allProducts[k].name + ' was chosen ' + allProducts[k].numOfClicks + ' times, and appeared ' + allProducts[k].numTimesShown + ' times.';
+      ulEl.appendChild(liEl);
+    }
+  }
   //creating img based on name of product instance
   for (var i = 0; i < 3; i++) {
     do {
@@ -63,23 +72,6 @@ function randomProduct() {
   //creating an array for previous images
   for (var j = 0; j < randomIndex.length; j++) {
     previousImages[j] = randomIndex[j];
-  }
-  if (totalClicks === 25) {
-    for (var p = 0; p < 3; p++) {
-      imgEl[p].removeEventListener('click', tallyCounter);
-      imgEl[p].onclick = function() {
-        return false;
-      };
-    }
-    console.log('creating data!');
-    var dataEl = document.getElementById('data');
-    var ulEl = document.createElement('ul');
-    dataEl.appendChild(ulEl);
-    for (var k = 0; k < allProducts.length; k++) {
-      var liEl = document.createElement('li');
-      liEl.textContent = allProducts[k].name + ' was chosen ' + allProducts[k].numOfClicks + ' times, and appeared ' + allProducts[k].numTimesShown + ' times.';
-      ulEl.appendChild(liEl);
-    }
   }
 }
 function tallyCounter() {
