@@ -16,11 +16,11 @@ function Product(name, filepath) {
 }
 
 // instantiating new Products with a for loop
-for (var p = 0; p < Product.names.length; p++) {
-  if (Product.names[p] === 'usb') {
-    new Product(Product.names[p], 'images/' + Product.names[p] + '.gif');
+for (var i = 0; i < Product.names.length; i++) {
+  if (Product.names[i] === 'usb') {
+    new Product(Product.names[i], 'images/' + Product.names[i] + '.gif');
   } else {
-    new Product(Product.names[p], 'images/' + Product.names[p] + '.jpg');
+    new Product(Product.names[i], 'images/' + Product.names[i] + '.jpg');
   }
 }
 
@@ -29,38 +29,43 @@ var randomIndex = [.1, .2, .3]; //placeholder numbers so that correct line of co
 var previousImages = [.4, .5, .6]; //placeholder numbers so that correct line of code in conditional will run the first time
 
 //for loop to locate image location in HTML and creating event listener for each image
-for (var i = 0; i < 3; i++) {
-  imgEl[i] = document.getElementById('image-' + (i + 1));
-  imgEl[i].addEventListener('click', tallyCounter);
+for (var j = 0; j < 3; j++) {
+  imgEl[j] = document.getElementById('image-' + (j + 1));
+  imgEl[j].addEventListener('click', tallyCounter);
 }
 
 //function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 function randomProduct() {
   totalClicks++;
   if (totalClicks === 25) {
-    for (var p = 0; p < 3; p++) {
-      imgEl[p].removeEventListener('click', tallyCounter);
-      imgEl[p].onclick = function () {
+    for (var k = 0; k < 3; k++) {
+      imgEl[k].removeEventListener('click', tallyCounter);
+      imgEl[k].onclick = function () {
         return false;
       };
     }
     console.log('creating data!');
     var ctx1 = document.getElementById('chart1');
-    var ctx2 = document.getElementById('chart2');
 
-    for (var s = 0; s < allProducts.length; s++) {
-      allNumOfClicks.push(allProducts[s].numOfClicks);
-      allNumTimesShown.push(allProducts[s].numTimesShown);
+    for (var l = 0; l < allProducts.length; l++) {
+      allNumOfClicks.push(allProducts[l].numOfClicks);
+      allNumTimesShown.push(allProducts[l].numTimesShown);
     }
     new Chart(ctx1, {
       type: 'bar',
       data: {
         labels: Product.names,
-        datasets: [{
-          label: '# of Votes',
-          data: allNumOfClicks,
-          backgroundColor: 'lightblue'
-        }]
+        datasets: [
+          {
+            label: '# of Votes',
+            data: allNumOfClicks,
+            backgroundColor: 'lightBlue',
+          }, {
+            label: '# of Times Shown',
+            data: allNumTimesShown,
+            backgroundColor: 'gray',
+          }
+        ]
       },
       options: {
         title: {
@@ -68,59 +73,44 @@ function randomProduct() {
           text: 'Number of Times Product is Chosen'
         },
         scales: {
-          yAxes: [{
+
+          xAxes: [{
+            stacked: true,
             ticks: {
               beginAtZero: true
             }
-          }]
-        }
-      }
-    });
-    new Chart(ctx2, {
-      type: 'bar',
-      data: {
-        labels: Product.names,
-        datasets: [{
-          label: '# of times',
-          data: allNumTimesShown,
-          backgroundColor: 'lightgreen'
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: 'Number of Times Product Appears'
-        },
-        scales: {
+          }],
           yAxes: [{
+            stacked: true,
             ticks: {
               beginAtZero: true
             }
-          }]
+          }],
+
         }
       }
     });
   }
   //creating img based on name of product instance
-  for (var i = 0; i < 3; i++) {
+  for (var m = 0; m < 3; ++m) {
     do {
-      randomIndex[i] = Math.floor(Math.random() * Product.allProducts.length);
-      imgEl[i].src = Product.allProducts[randomIndex[i]].filepath;
-    } while ((randomIndex[i] === previousImages[0] || randomIndex[i] === previousImages[1] || randomIndex[i] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
+      randomIndex[m] = Math.floor(Math.random() * Product.allProducts.length);
+      imgEl[m].src = Product.allProducts[randomIndex[m]].filepath;
+    } while ((randomIndex[m] === previousImages[0] || randomIndex[m] === previousImages[1] || randomIndex[m] === previousImages[2]) || randomIndex[0] === randomIndex[1] || randomIndex[0] === randomIndex[2] || randomIndex[1] === randomIndex[2]);
   }
   //display number of times image is shown
-  for (var m = 0; m < 3; m++) {
-    allProducts[randomIndex[m]].numTimesShown++;
+  for (var n = 0; n < 3; n++) {
+    allProducts[randomIndex[n]].numTimesShown++;
   }
   //changing id from generic to specific id
-  for (var s = 0; s < 3; s++) {
-    imgEl[s].setAttribute('id', Product.allProducts[randomIndex[s]].name);
+  for (var o = 0; o < 3; o++) {
+    imgEl[o].setAttribute('id', Product.allProducts[randomIndex[o]].name);
   }
 
   console.log('The random number for image one is: ' + randomIndex[0] + ', The random number for image two is: ' + randomIndex[1] + ', The random number for image three is ' + randomIndex[2]);
   //creating an array for previous images
-  for (var j = 0; j < randomIndex.length; j++) {
-    previousImages[j] = randomIndex[j];
+  for (var p = 0; p < randomIndex.length; p++) {
+    previousImages[p] = randomIndex[p];
   }
 }
 

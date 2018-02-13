@@ -85,3 +85,12 @@ footer {
   background-color: lightgray;
 }
 
+#data {
+  width: 960px;
+}
+
+#data :first-child, #data :last-child {
+  width: 50%;
+  margin: 0px;
+  display: inline-block;
+}
