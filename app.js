@@ -49,7 +49,7 @@ function randomProduct() {
 
     for (var l = 0; l < allProducts.length; l++) {
       allNumOfClicks.push(allProducts[l].numOfClicks);
-      allNumTimesShown.push(allProducts[l].numTimesShown);
+      allNumTimesShown.push(allProducts[l].numTimesShown - allProducts[l].numOfClicks);
     }
     new Chart(ctx1, {
       type: 'bar',
