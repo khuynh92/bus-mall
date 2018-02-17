@@ -17,6 +17,11 @@ nav img, nav ul, nav li {
   display: inline-block;
 }
 
+nav img {
+  margin-top: 10px;
+  width: 125px;
+}
+
 nav ul, nav img {
   float: left;
 }
@@ -86,7 +91,7 @@ footer {
 }
 
 #data {
-  width: 960px;
+  width: 20px;
 }
 
 #data :first-child, #data :last-child {
@@ -101,6 +106,9 @@ button {
   background-color: lightgray;
   display: block;
   margin: auto;
+  border: none;
+  transition: 300ms;
+  border-radius: 5px;
 }
 
 button:hover {
