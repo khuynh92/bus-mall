@@ -94,3 +94,16 @@ footer {
   margin: 0px;
   display: inline-block;
 }
+
+button {
+  width: 100px;
+  height: 50px;
+  background-color: lightgray;
+  display: block;
+  margin: auto;
+}
+
+button:hover {
+  background-color: gray;
+  cursor: pointer;
+}

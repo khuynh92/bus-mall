@@ -6,6 +6,7 @@ var allProducts = Product.allProducts = [];
 var totalClicks = -1;
 var allNumOfClicks = [];
 var allNumTimesShown = [];
+var randomColors = [];
 
 function Product(name, filepath) {
   this.name = name;
@@ -34,10 +35,20 @@ for (var j = 0; j < 3; j++) {
   imgEl[j].addEventListener('click', tallyCounter);
 }
 
+//random color for charts
+for (var z = 0; z < allProducts.length; z++) {
+  var randomNumber1 = Math.floor(Math.random() * 256);
+  var randomNumber2 = Math.floor(Math.random() * 256);
+  var randomNumber3 = Math.floor(Math.random() * 256);
+  var randomColor = 'rgb(' + randomNumber1 + ', ' + randomNumber2 + ', ' + randomNumber3 + ')';
+  randomColors.push(randomColor);
+}
 //function to create random product images that appear on HTML, created with a do while loop that checks for duplicates in same row and also checks if any of the curent iteration of images matches the previous images.
 function randomProduct() {
   totalClicks++;
-  if (totalClicks === 25) {
+  var totalClicksStringify = JSON.stringify(totalClicks);
+  localStorage.setItem('totalClicksData', totalClicksStringify);
+  if (totalClicks >= 25) {
     for (var k = 0; k < 3; k++) {
       imgEl[k].removeEventListener('click', tallyCounter);
       imgEl[k].onclick = function () {
@@ -51,6 +62,7 @@ function randomProduct() {
       allNumOfClicks.push(allProducts[l].numOfClicks);
       allNumTimesShown.push(allProducts[l].numTimesShown - allProducts[l].numOfClicks);
     }
+    //random color 
     new Chart(ctx1, {
       type: 'bar',
       data: {
@@ -59,7 +71,7 @@ function randomProduct() {
           {
             label: '# of Votes',
             data: allNumOfClicks,
-            backgroundColor: 'lightBlue',
+            backgroundColor: randomColors
           }, {
             label: '# of Times Shown',
             data: allNumTimesShown,
@@ -68,6 +80,7 @@ function randomProduct() {
         ]
       },
       options: {
+        tooltips: { enabled: false },
         title: {
           display: true,
           text: 'Number of Times Product is Chosen'
@@ -92,7 +105,7 @@ function randomProduct() {
     });
   }
   //creating img based on name of product instance
-  for (var m = 0; m < 3; ++m) {
+  for (var m = 0; m < 3; m++) {
     do {
       randomIndex[m] = Math.floor(Math.random() * Product.allProducts.length);
       imgEl[m].src = Product.allProducts[randomIndex[m]].filepath;
@@ -112,6 +125,8 @@ function randomProduct() {
   for (var p = 0; p < randomIndex.length; p++) {
     previousImages[p] = randomIndex[p];
   }
+  var allProductsStringify = JSON.stringify(allProducts);
+  localStorage.setItem('storeData', allProductsStringify);
 }
 
 function tallyCounter() {
@@ -143,4 +158,28 @@ function tallyCounter() {
     };
   }
 }
-tallyCounter();
+
+(function getLocalStorage() {
+  if (localStorage.totalClicksData) {
+    var totalClicksStringify = localStorage.getItem('totalClicksData');
+    var totalClicksData = JSON.parse(totalClicksStringify);
+    totalClicks = totalClicksData;
+    totalClicks--;
+  }
+  if (localStorage.storeData) {
+    var allProductsStringify = localStorage.getItem('storeData');
+    var storeData = JSON.parse(allProductsStringify);
+    allProducts = storeData;
+    randomProduct();
+    tallyCounter();
+  } else {
+    tallyCounter();
+  }
+})();
+
+//function for removing local storage
+var buttonEl = document.getElementById('button');
+buttonEl.addEventListener('click', function () {
+  localStorage.clear();
+  location.reload();
+});
