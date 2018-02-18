@@ -5,16 +5,23 @@ body {
 #nav {
   height: 100px;  
   margin:  0 auto;
-  background-color: lightgray;
 }
 
 nav {
   width: 960px;
   margin: 0 auto;
+  overflow: auto;
 }
 
 nav img, nav ul, nav li {
   display: inline-block;
+}
+
+nav img {
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 125px;
+
 }
 
 nav ul, nav img {
@@ -26,7 +33,7 @@ nav ul {
 }
 
 nav ul li {
-  margin-right: 75px;
+  margin-right: 85px;
 }
 
 
@@ -86,11 +93,37 @@ footer {
 }
 
 #data {
-  width: 960px;
+  width: 20px;
 }
 
 #data :first-child, #data :last-child {
   width: 50%;
   margin: 0px;
   display: inline-block;
+}
+
+button {
+  width: 100px;
+  height: 50px;
+  background-color: lightgray;
+  display: block;
+  margin: auto;
+  border: none;
+  transition: 300ms;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+}
+
+a:hover {
+  color: lightgray;
 }
