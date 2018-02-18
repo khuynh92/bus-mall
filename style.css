@@ -5,12 +5,12 @@ body {
 #nav {
   height: 100px;  
   margin:  0 auto;
-  background-color: lightgray;
 }
 
 nav {
   width: 960px;
   margin: 0 auto;
+  overflow: auto;
 }
 
 nav img, nav ul, nav li {
@@ -19,7 +19,9 @@ nav img, nav ul, nav li {
 
 nav img {
   margin-top: 10px;
+  margin-left: 20px;
   width: 125px;
+
 }
 
 nav ul, nav img {
@@ -31,7 +33,7 @@ nav ul {
 }
 
 nav ul li {
-  margin-right: 75px;
+  margin-right: 85px;
 }
 
 
@@ -114,4 +116,14 @@ button {
 button:hover {
   background-color: gray;
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+}
+
+a:hover {
+  color: lightgray;
 }
